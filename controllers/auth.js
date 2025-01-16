@@ -72,7 +72,7 @@ const authController = {
                 return res.status(code.BANNED).json(formattedResponse)
             }
 
-            const accessToken = jwt.sign({userId: user.ID, isAdmin: user.ADMIN}, process.env.JWT_SECRET, {expiresIn: '24h'})
+            const accessToken = jwt.sign({userId: user.ID, isAdmin: user.ADMIN}, process.env.JWT_SECRET, {expiresIn: process.env.TOKEN_EXPIRATION})
 
             const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Login successfully", accessToken})
             return res.status(code.SUCCESS).json(formattedResponse)
