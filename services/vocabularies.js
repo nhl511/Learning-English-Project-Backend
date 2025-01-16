@@ -47,6 +47,10 @@ const vocabulariesService = {
         })
     },
 
+    async createManyVocabulary(vocabularies){
+        return await models.vocabulary.bulkCreate(vocabularies)
+    },
+
     async updateVocabulary ({id, word, definition, transcription, partsOfSpeechId, unitId, notes}) {
         return await models.vocabulary.update({
             WORD: word,

@@ -44,6 +44,17 @@ const vocabulariesController = {
         }
     },
 
+    async createManyVocabulary(req, res) {
+        try{
+            await vocabulariesService.createManyVocabulary(req.body)
+            const formattedResponse = createFormatResponse({status: status.OK, code: code.CREATED, success: true, message: "Create vocabularies successfully"})
+            return res.status(code.CREATED).json(formattedResponse)
+        }catch(error){
+            const formattedResponse = createFormatResponse({status: status.ERROR, code: code.SERVER_ERROR, success: false, message: "Server Error", errors: error})
+            return res.status(code.SERVER_ERROR).json(formattedResponse)
+        }
+    },
+
     async updateVocabulary(req, res) {
         try{
             await vocabulariesService.updateVocabulary({

@@ -6,14 +6,14 @@ const req = require("express/lib/request");
 const partsOfSpeechController = {
     async getAllPartsOfSpeech(req, res) {
         try{
-            const partsOfSpeech = await partsOfSpeechService.getAllPartsOfSpeech()
+            const partsOfSpeeches = await partsOfSpeechService.getAllPartsOfSpeech()
             const count = await partsOfSpeechService.countPartsOfSpeech()
             const formattedResponse = createFormatResponse({
                 status: status.OK,
                 code: code.SUCCESS,
                 success: true,
                 message: "Get all parts of speech successfully",
-                data: {partsOfSpeech, count}
+                data: {partsOfSpeeches, count}
             })
             return res.status(code.SUCCESS).json(formattedResponse)
         }catch(error){
@@ -24,14 +24,14 @@ const partsOfSpeechController = {
 
     async getPartsOfSpeechActive(req, res) {
         try{
-            const partsOfSpeech = await partsOfSpeechService.getPartsOfSpeechActive()
+            const partsOfSpeeches = await partsOfSpeechService.getPartsOfSpeechActive()
             const count = await partsOfSpeechService.countPartsOfSpeechActive()
             const formattedResponse = createFormatResponse({
                 status: status.OK,
                 code: code.SUCCESS,
                 success: true,
                 message: "Get all parts of speech successfully",
-                data: {partsOfSpeech, count}
+                data: {partsOfSpeeches, count}
             })
             return res.status(code.SUCCESS).json(formattedResponse)
         }catch(error){
