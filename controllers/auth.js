@@ -25,7 +25,7 @@ const authController = {
                 to: req.body.email,
                 subject: "Verify Email",
                 htmlContent: `
-                    <a href="http://localhost:8080/api/auth/verify?token=${token}">Verify</a>
+                    <a href="${process.env.BACKEND_BASE_URL}/api/auth/verify?token=${token}">Verify</a>
             `})
 
             const formattedResponse = createFormatResponse({status: status.OK, code: code.CREATED, success: true, message: "Register account successfully"})
