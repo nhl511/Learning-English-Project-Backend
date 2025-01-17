@@ -1,4 +1,9 @@
-require('dotenv').config();
+// require('dotenv').config();
+const dotenv = require('dotenv');
+const path = require('path');
+const env = process.env.NODE_ENV;
+
+dotenv.config({ path: path.resolve(process.cwd(), `.env.${env}`) });
 
 module.exports = {
   "development": {
@@ -9,7 +14,7 @@ module.exports = {
     "port": process.env.DB_PORT,
     "dialect": 'mysql',
   },
-  "test": {
+  "staging": {
     "username": process.env.DB_USERNAME,
     "password": process.env.DB_PASSWORD,
     "database": process.env.DB_NAME,
