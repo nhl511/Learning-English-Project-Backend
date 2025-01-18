@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "PORT=8080 node ./bin/www",
     "migration:create": "npx sequelize-cli migration:create",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:staging": "NODE_ENV=staging npx sequelize-cli db:migrate",
