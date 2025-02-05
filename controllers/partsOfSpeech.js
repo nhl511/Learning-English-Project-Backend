@@ -6,7 +6,10 @@ const req = require("express/lib/request");
 const partsOfSpeechController = {
     async getAllPartsOfSpeech(req, res) {
         try{
-            const partsOfSpeeches = await partsOfSpeechService.getAllPartsOfSpeech()
+            const partsOfSpeeches = await partsOfSpeechService.getAllPartsOfSpeech({
+                page: Number(req.query.page),
+                pageSize: Number(req.query.pageSize),
+            })
             const count = await partsOfSpeechService.countPartsOfSpeech()
             const formattedResponse = createFormatResponse({
                 status: status.OK,

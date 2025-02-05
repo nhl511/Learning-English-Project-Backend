@@ -1,7 +1,7 @@
 const models = require('../models');
 
 const unitsService = {
-    async getAllUnits() {
+    async getAllUnits({page, pageSize}) {
         return await models.unit.findAll({
             include: [
                 {
@@ -19,6 +19,8 @@ const unitsService = {
             ],
             attributes: { exclude: ['GRADE_ID'] },
             order: [['CREATED_AT', 'ASC']],
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
         });
     },
 

@@ -5,7 +5,10 @@ const {status, code} = require("../constant/constant");
 const unitsController = {
     async getAllUnits(req, res) {
         try{
-            const units = await unitsService.getAllUnits()
+            const units = await unitsService.getAllUnits({
+                page: Number(req.query.page),
+                pageSize: Number(req.query.pageSize),
+            })
             const count = await unitsService.countUnits()
             const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Get all units successfully", data: {units, count}})
             return res.status(code.SUCCESS).json(formattedResponse)

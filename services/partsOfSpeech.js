@@ -1,9 +1,11 @@
 const models = require('../models');
 
 const partsOfSpeechService = {
-    async getAllPartsOfSpeech() {
+    async getAllPartsOfSpeech({page, pageSize}) {
         return await models.partsOfSpeech.findAll({
             order: [['CREATED_AT', 'ASC']],
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
         })
     },
 

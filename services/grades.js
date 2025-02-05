@@ -2,7 +2,7 @@ const models = require("../models")
 
 
 const gradesService = {
-    async getAllGrades(){
+    async getAllGrades({page, pageSize}){
         return await models.grade.findAll({
             include: [
                 {
@@ -12,6 +12,8 @@ const gradesService = {
             ],
             attributes: { exclude: ['CURRICULUM_ID'] },
             order: [['CREATED_AT', 'ASC']],
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
         })
     },
 
