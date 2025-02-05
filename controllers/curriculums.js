@@ -4,7 +4,10 @@ const curriculumsService = require("../services/curriculums");
 const curriculumsController = {
     async getAllCurriculums(req, res) {
         try{
-            const curriculums = await curriculumsService.getAllCurriculums();
+            const curriculums = await curriculumsService.getAllCurriculums({
+                page: Number(req.query.page),
+                pageSize: Number(req.query.pageSize),
+            });
             const count = await curriculumsService.countCurriculums();
             const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Get all curriculums successfully", data: {curriculums, count}})
             return res.status(code.SUCCESS).json(formattedResponse)

@@ -5,7 +5,10 @@ const gradeService = require("../services/grades");
 const gradesController = {
     async getAllGrades(req, res) {
         try{
-            const grades = await gradeService.getAllGrades();
+            const grades = await gradeService.getAllGrades({
+                page: Number(req.query.page),
+                pageSize: Number(req.query.pageSize),
+            });
             const count = await gradeService.countGrades()
             const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Get all grades successfully", data: {grades, count}})
             return res.status(code.SUCCESS).json(formattedResponse)

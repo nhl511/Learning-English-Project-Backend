@@ -5,7 +5,7 @@ const vocabulariesService = require("../services/vocabularies")
 const vocabulariesController = {
     async getAllVocabularies(req, res) {
         try{
-            const vocabularies = await vocabulariesService.getAllVocabularies();
+            const vocabularies = await vocabulariesService.getAllVocabularies({page: Number(req.query.page), pageSize: Number(req.query.pageSize)});
             const count = await vocabulariesService.countVocabularies();
             const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Get all vocabularies successfully", data: {vocabularies, count}})
             return res.status(code.SUCCESS).json(formattedResponse)

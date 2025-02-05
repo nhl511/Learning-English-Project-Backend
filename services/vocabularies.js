@@ -1,7 +1,7 @@
 const models = require("../models")
 
 const vocabulariesService = {
-    async getAllVocabularies () {
+    async getAllVocabularies ({page, pageSize}) {
         return await models.vocabulary.findAll({
             include: [
                 {
@@ -29,6 +29,8 @@ const vocabulariesService = {
             ],
             attributes: { exclude: ['PARTS_OF_SPEECH_ID', "UNIT_ID"] },
             order: [['CREATED_AT', 'ASC']],
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
         })
     },
 
