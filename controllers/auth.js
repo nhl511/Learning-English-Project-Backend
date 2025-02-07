@@ -73,8 +73,14 @@ const authController = {
             }
 
             const accessToken = jwt.sign({userId: user.ID, isAdmin: user.ADMIN}, process.env.JWT_SECRET, {expiresIn: process.env.TOKEN_EXPIRATION})
-
-            const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Login successfully", accessToken})
+            res.cookie("access-token", accessToken, {
+                httpOnly: true,
+                secure: process.env.COOKIE_SECURE,
+                sameSite: "lax",
+                domain: process.env.COOKIE_DOMAIN,
+                path: "/",
+            });
+            const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Login successfully"})
             return res.status(code.SUCCESS).json(formattedResponse)
         }catch(error){
             const formattedResponse = createFormatResponse({status: status.ERROR, code: code.SERVER_ERROR, success: false, message: "Server Error", errors: error})
@@ -87,7 +93,8 @@ const authController = {
             res.cookie("access-token", "", {
                 httpOnly: true,
                 secure: process.env.COOKIE_SECURE,
-                sameSite: "strict",
+                sameSite: "lax",
+                domain: process.env.COOKIE_DOMAIN,
                 expires: new Date(0),
                 path: "/",
             });
