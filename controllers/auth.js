@@ -80,6 +80,23 @@ const authController = {
             const formattedResponse = createFormatResponse({status: status.ERROR, code: code.SERVER_ERROR, success: false, message: "Server Error", errors: error})
             return res.status(code.SERVER_ERROR).json(formattedResponse)
         }
+    },
+
+    async logout(req, res) {
+        try{
+            res.cookie("access-token", "", {
+                httpOnly: true,
+                secure: process.env.COOKIE_SECURE,
+                sameSite: "strict",
+                expires: new Date(0),
+                path: "/",
+            });
+            const formattedResponse = createFormatResponse({status: status.OK, code: code.SUCCESS, success: true, message: "Logout successfully"})
+            return res.status(code.SUCCESS).json(formattedResponse)
+        }catch(error){
+            const formattedResponse = createFormatResponse({status: status.ERROR, code: code.SERVER_ERROR, success: false, message: "Server Error", errors: error})
+            return res.status(code.SERVER_ERROR).json(formattedResponse)
+        }
     }
 }
 

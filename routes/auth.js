@@ -13,4 +13,6 @@ router.post("/register", validateRequest(authSchema), checkEmailExists,  authCon
 
 router.post("/login", validateRequest(authSchema), authController.login)
 
+router.post("/logout", authController.logout)
+
 module.exports = router;
