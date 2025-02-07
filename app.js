@@ -15,7 +15,10 @@ const authRouter = require("./routes/auth");
 const app = express();
 const cors = require('cors');
 
-app.use(cors())
+app.use(cors({
+    origin: process.env.FRONTEND_BASE_URL,
+    credentials: true,
+}))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
