@@ -74,8 +74,8 @@ const authController = {
 
             const accessToken = jwt.sign({userId: user.ID, isAdmin: user.ADMIN}, process.env.JWT_SECRET, {expiresIn: process.env.TOKEN_EXPIRATION})
             res.cookie("access-token", accessToken, {
-                httpOnly: true,
-                secure: process.env.COOKIE_SECURE,
+                httpOnly: process.env.COOKIE_HTTPONLY === "true",
+                secure: process.env.COOKIE_SECURE === "true",
                 sameSite: "lax",
                 domain: process.env.COOKIE_DOMAIN,
                 path: "/",
@@ -91,8 +91,8 @@ const authController = {
     async logout(req, res) {
         try{
             res.cookie("access-token", "", {
-                httpOnly: true,
-                secure: process.env.COOKIE_SECURE,
+                httpOnly: process.env.COOKIE_HTTPONLY === "true",
+                secure: process.env.COOKIE_SECURE === "true",
                 sameSite: "lax",
                 domain: process.env.COOKIE_DOMAIN,
                 expires: new Date(0),
