@@ -3,7 +3,7 @@ const models = require("../models")
 const curriculumsService = {
     async getAllCurriculums({page, pageSize}) {
         return await models.curriculum.findAll({
-            order: [['CREATED_AT', 'ASC']],
+            order: [['NAME', 'ASC']],
             limit: pageSize,
             offset: (page - 1) * pageSize,
         })
@@ -14,7 +14,7 @@ const curriculumsService = {
             where: {
                 ACTIVE: true
             },
-            order: [['CREATED_AT', 'ASC']],
+            order: [['NAME', 'ASC']],
         })
     },
 

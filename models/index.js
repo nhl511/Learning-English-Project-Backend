@@ -46,9 +46,6 @@ db.grade.belongsTo(db.curriculum, { foreignKey: 'CURRICULUM_ID', as: "CURRICULUM
 db.grade.hasMany(db.unit, { foreignKey: 'GRADE_ID', onDelete: 'CASCADE', as: "GRADE" });
 db.unit.belongsTo(db.grade, { foreignKey: 'GRADE_ID', as: "GRADE" });
 
-db.partsOfSpeech.hasMany(db.vocabulary, {foreignKey: "PARTS_OF_SPEECH_ID", onDelete: "SET NULL", as: "PARTS_OF_SPEECH"})
-db.vocabulary.belongsTo(db.partsOfSpeech, {foreignKey: "PARTS_OF_SPEECH_ID", as: "PARTS_OF_SPEECH"})
-
 db.unit.hasMany(db.vocabulary, {foreignKey: "UNIT_ID", onDelete: "CASCADE", as: "UNIT"})
 db.vocabulary.belongsTo(db.unit, {foreignKey: "UNIT_ID", as: "UNIT"})
 

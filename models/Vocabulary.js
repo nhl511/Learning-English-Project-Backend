@@ -22,15 +22,6 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(100),
             validate: {len: [0, 100]}
         },
-        PARTS_OF_SPEECH_ID: {
-            type: DataTypes.UUID,
-            allowNull: true,
-            references: {
-                model: 'partsOfSpeech',
-                key: 'ID',
-            },
-            onDelete: 'SET NULL',
-        },
         UNIT_ID: {
             type: DataTypes.UUID,
             allowNull: false,

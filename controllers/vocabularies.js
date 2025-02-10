@@ -32,7 +32,6 @@ const vocabulariesController = {
                 word: req.body.word,
                 definition: req.body.definition,
                 transcription: req.body.transcription,
-                partsOfSpeechId: req.body.partsOfSpeechId,
                 unitId: req.body.unitId,
                 notes: req.body.notes,
             })
@@ -62,7 +61,6 @@ const vocabulariesController = {
                 word: req.body.word,
                 definition: req.body.definition,
                 transcription: req.body.transcription,
-                partsOfSpeechId: req.body.partsOfSpeechId,
                 unitId: req.body.unitId,
                 notes: req.body.notes,
             })
