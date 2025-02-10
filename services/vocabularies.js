@@ -1,13 +1,10 @@
 const models = require("../models")
+const {Sequelize} = require("sequelize");
 
 const vocabulariesService = {
     async getAllVocabularies ({page, pageSize}) {
         return await models.vocabulary.findAll({
             include: [
-                {
-                    model: models.partsOfSpeech,
-                    as: "PARTS_OF_SPEECH"
-                },
                 {
                     model: models.unit,
                     as: "UNIT",
@@ -28,7 +25,12 @@ const vocabulariesService = {
                 }
             ],
             attributes: { exclude: ['PARTS_OF_SPEECH_ID', "UNIT_ID"] },
-            order: [['CREATED_AT', 'ASC']],
+            order: [
+                [Sequelize.col('UNIT.GRADE.CURRICULUM.NAME'), 'ASC'],
+                [Sequelize.col('UNIT.GRADE.GRADE_NUMBER'), 'ASC'],
+                [Sequelize.col('UNIT.UNIT_NUMBER'), 'ASC'],
+                ['WORD', 'ASC']
+            ],
             limit: pageSize,
             offset: (page - 1) * pageSize,
         })
@@ -38,12 +40,11 @@ const vocabulariesService = {
         return await models.vocabulary.findByPk(id)
     },
 
-    async createVocabulary ({word, definition, transcription, partsOfSpeechId, unitId, notes}) {
+    async createVocabulary ({word, definition, transcription, unitId, notes}) {
         return await models.vocabulary.create({
             WORD: word,
             DEFINITION: definition,
             TRANSCRIPTION: transcription,
-            PARTS_OF_SPEECH_ID: partsOfSpeechId,
             UNIT_ID: unitId,
             NOTES: notes,
         })
@@ -58,7 +59,6 @@ const vocabulariesService = {
             WORD: word,
             DEFINITION: definition,
             TRANSCRIPTION: transcription,
-            PARTS_OF_SPEECH_ID: partsOfSpeechId,
             UNIT_ID: unitId,
             NOTES: notes,
         },{

@@ -1,4 +1,5 @@
 const models = require("../models")
+const {Sequelize} = require("sequelize");
 
 
 const gradesService = {
@@ -11,7 +12,10 @@ const gradesService = {
                 }
             ],
             attributes: { exclude: ['CURRICULUM_ID'] },
-            order: [['CREATED_AT', 'ASC']],
+            order: [
+                [Sequelize.col('CURRICULUM.NAME'), 'ASC'],
+                ['GRADE_NUMBER', 'ASC']
+            ],
             limit: pageSize,
             offset: (page - 1) * pageSize,
         })
@@ -22,7 +26,10 @@ const gradesService = {
             where: {
                 ACTIVE: true
             },
-            order: [['CREATED_AT', 'ASC']],
+            order: [
+                [Sequelize.col('CURRICULUM.NAME'), 'ASC'],
+                ['GRADE_NUMBER', 'ASC']
+            ],
         })
     },
 
@@ -32,7 +39,7 @@ const gradesService = {
                 CURRICULUM_ID: id,
                 ACTIVE: true
             },
-            order: [['CREATED_AT', 'ASC']],
+            order: [['GRADE_NUMBER', 'ASC']],
         })
     },
 

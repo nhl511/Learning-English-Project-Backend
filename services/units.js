@@ -1,4 +1,5 @@
 const models = require('../models');
+const {Sequelize} = require("sequelize");
 
 const unitsService = {
     async getAllUnits({page, pageSize}) {
@@ -18,7 +19,11 @@ const unitsService = {
                 }
             ],
             attributes: { exclude: ['GRADE_ID'] },
-            order: [['CREATED_AT', 'ASC']],
+            order: [
+                [Sequelize.col('GRADE.CURRICULUM.NAME'), 'ASC'],
+                [Sequelize.col('GRADE.GRADE_NUMBER'), 'ASC'],
+                ['UNIT_NUMBER', 'ASC']
+            ],
             limit: pageSize,
             offset: (page - 1) * pageSize,
         });
@@ -29,7 +34,7 @@ const unitsService = {
             where: {
                 ACTIVE: true
             },
-            order: [['CREATED_AT', 'ASC']],
+            order: [['UNIT_NUMBER', 'ASC']],
         })
     },
 
@@ -39,7 +44,7 @@ const unitsService = {
                 GRADE_ID: id,
                 ACTIVE: true
             },
-            order: [['CREATED_AT', 'ASC']],
+            order: [['UNIT_NUMBER', 'ASC']],
         })
     },
 
