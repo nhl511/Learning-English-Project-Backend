@@ -2,20 +2,66 @@ const models = require("../models")
 const {Sequelize} = require("sequelize");
 
 const vocabulariesService = {
-    async getAllVocabularies ({page, pageSize}) {
+    // async getAllVocabularies ({page, pageSize}) {
+    //     return await models.vocabulary.findAll({
+    //         include: [
+    //             {
+    //                 model: models.unit,
+    //                 as: "UNIT",
+    //                 include: [
+    //                     {
+    //                         model: models.grade,
+    //                         as: "GRADE",
+    //                         include: [
+    //                             {
+    //                                 model: models.curriculum,
+    //                                 as: "CURRICULUM",
+    //                             }
+    //                         ],
+    //                         attributes: { exclude: ['CURRICULUM_ID'] },
+    //                     }
+    //                 ],
+    //                 attributes: { exclude: ['GRADE_ID'] },
+    //             }
+    //         ],
+    //         attributes: { exclude: ['PARTS_OF_SPEECH_ID', "UNIT_ID"] },
+    //         order: [
+    //             [Sequelize.col('UNIT.GRADE.CURRICULUM.NAME'), 'ASC'],
+    //             [Sequelize.col('UNIT.GRADE.GRADE_NUMBER'), 'ASC'],
+    //             [Sequelize.col('UNIT.UNIT_NUMBER'), 'ASC'],
+    //             ['WORD', 'ASC']
+    //         ],
+    //         limit: pageSize,
+    //         offset: (page - 1) * pageSize,
+    //     })
+    // },
+
+    async getAllVocabularies ({page, pageSize, curriculumId = null, gradeId = null, unitId = null}) {
         return await models.vocabulary.findAll({
             include: [
                 {
                     model: models.unit,
                     as: "UNIT",
+                    required: true,
+                    where: unitId ? {
+                        ID: unitId
+                    } : null,
                     include: [
                         {
                             model: models.grade,
                             as: "GRADE",
+                            required: true,
+                            where: gradeId ? {
+                                ID: gradeId
+                            } : null,
                             include: [
                                 {
                                     model: models.curriculum,
                                     as: "CURRICULUM",
+                                    required: true,
+                                    where: curriculumId ? {
+                                        ID: curriculumId
+                                    } : null,
                                 }
                             ],
                             attributes: { exclude: ['CURRICULUM_ID'] },
@@ -78,8 +124,41 @@ const vocabulariesService = {
         })
     },
 
-    async countVocabularies(){
-        return await models.vocabulary.count()
+    async countVocabularies({curriculumId = null, gradeId = null, unitId = null}) {
+        return await models.vocabulary.count({
+            include: [
+                {
+                    model: models.unit,
+                    as: "UNIT",
+                    required: true,
+                    where: unitId ? {
+                        ID: unitId,
+                    } : null,
+                    include: [
+                        {
+                            model: models.grade,
+                            as: "GRADE",
+                            required: true,
+                            where: gradeId ? {
+                                ID: gradeId
+                            } : null,
+                            include: [
+                                {
+                                    model: models.curriculum,
+                                    as: "CURRICULUM",
+                                    required: true,
+                                    where: curriculumId ? {
+                                        ID: curriculumId
+                                    } : null,
+                                }
+                            ],
+                            attributes: { exclude: ['CURRICULUM_ID'] },
+                        }
+                    ],
+                    attributes: { exclude: ['GRADE_ID'] },
+                }
+            ],
+        })
     }
 }
 
